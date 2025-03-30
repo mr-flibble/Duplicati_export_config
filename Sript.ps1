@@ -20,6 +20,14 @@ if (!(Test-Path -Path $ExportPath)) {
     }
 }
 
+try {
+    Set-Location -Path $ExportPath
+}
+catch {
+    Write-Error "Nepodařilo se změnit pracovní adresář na '$ExportPath': $($_.Exception.Message)"
+    return
+}
+
 # Login to Duplicati server
 try {
     & "$DuplicatiPath" login --password="$Password" --hosturl="$HostUrl"
