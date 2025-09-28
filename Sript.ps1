@@ -1,4 +1,5 @@
 # Variable settings
+$env:DUPLICATI_HOME = "C:\TEMP" # asi nutne aby duplicati chytre nevyčital lokalni nstalaci přes sqlite ale šel přes web
 $HostUrl = "http://localhost:8200" # Change to your Duplicati server URL
 $Password = "password" # Change to your password
 $ExportPath = "C:\DuplicatiBackups" # Change to the export path
@@ -41,7 +42,7 @@ catch {
 for ($i = 0; $i -le 20; $i++) {
     try {
         $exportFilePath = Join-Path -Path $ExportPath -ChildPath "Backup_$i.json"
-        & "$DuplicatiPath" export "$i" --export-passwords=true --unencrypted
+        & "$DuplicatiPath" export  "$i" --export-passwords=true --unencrypted --hosturl="$HostUrl"
         if ($LASTEXITCODE -ne 0) {
             Write-Warning "Failed to export backup with ID $i."
         } else {
